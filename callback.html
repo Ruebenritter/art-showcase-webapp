@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OAuth Callback</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/1.18.6/hello.all.min.js"></script>
+  <script>
+    hello.on('auth.login', function(auth) {
+      // Save the OAuth data in localStorage or sessionStorage
+      localStorage.setItem('tumblrAuth', JSON.stringify(auth));
+      // Redirect back to your main page
+      window.location.href = 'https://ruebenritter.github.io/art-showcase-webapp/';
+    });
+
+    // Trigger the OAuth response parsing
+    tumblr.init({
+      tumblr: {
+        id: 'YOUR_CONSUMER_KEY',
+        oauth: {
+          version: '1.0a',
+          auth: 'https://www.tumblr.com/oauth/authorize',
+          request: 'https://www.tumblr.com/oauth/request_token',
+          token: 'https://www.tumblr.com/oauth/access_token'
+        },
+        scope: {
+          basic: 'read,write'
+        }
+      }
+    }, {
+      redirect_uri: 'https://yourusername.github.io/callback'
+    });
+
+    tumblr.login({ force: false });
+  </script>
+</head>
+<body>
+  <p>Loading...</p>
+</body>
+</html>
